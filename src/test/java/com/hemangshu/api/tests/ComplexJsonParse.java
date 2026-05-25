@@ -5,7 +5,7 @@ import io.restassured.path.json.JsonPath;
 
 public class ComplexJsonParse {
 
-    public static void main( ){
+    public static void main() {
 
         JsonPath js = new JsonPath(payload.CoursePrice());
 
@@ -14,8 +14,8 @@ public class ComplexJsonParse {
         System.out.println(count);
 
         //Print all course titles and respective prices
-        for (int i=0; i < count; i++){
-            String courseTitles = js.get("courses["+i+"].title");
+        for (int i = 0; i < count; i++) {
+            String courseTitles = js.get("courses[" + i + "].title");
             System.out.println(courseTitles);
         }
 
