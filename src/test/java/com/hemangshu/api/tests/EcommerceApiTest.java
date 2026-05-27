@@ -2,12 +2,16 @@ package com.hemangshu.api.tests;
 
 import com.hemangshu.api.pojo.LoginRequest;
 import com.hemangshu.api.pojo.LoginResponse;
+import com.hemangshu.api.pojo.OrderDetails;
+import com.hemangshu.api.pojo.Orders;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.specification.RequestSpecification;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import static io.restassured.RestAssured.given;
 
@@ -48,5 +52,37 @@ public class EcommerceApiTest {
         JsonPath js = new JsonPath(addProductResponse);
         String productId = js.get("productId");
         System.out.println(productId);
+
+        //Place order
+
+        RequestSpecification  createOrderBaseReq = new RequestSpecBuilder().setBaseUri("https://rahulshettyacademy.com")
+                .addHeader("authorization", token).setContentType(ContentType.JSON).build();
+
+        OrderDetails orderDetails = new OrderDetails();
+        orderDetails.setCountry("India");
+        orderDetails.setProductOrderedId(productId);
+
+        List<OrderDetails> orderDetailsList = new ArrayList<OrderDetails>();
+        orderDetailsList.add(orderDetails);
+
+        Orders orders = new Orders();
+        orders.setOrders(orderDetailsList);
+
+        RequestSpecification createOrderReq = given().log().all().spec(createOrderBaseReq).body(orders);
+
+       String responseAddOrder =  createOrderReq.when().post("api/ecom/order/create-order").then().log().all().extract().asString();
+
+       System.out.println(responseAddOrder);
+
+       //Delete order
+
+        RequestSpecification  deleteOrderBaseReq = new RequestSpecBuilder().setBaseUri("https://rahulshettyacademy.com")
+                .addHeader("authorization", token).setContentType(ContentType.JSON).build();
+
+        RequestSpecification deleteProdReq = given().log().all().spec(deleteOrderBaseReq).pathParam("productId",productId);
+        String deleteResponse = deleteProdReq.when().delete("api/ecom/product/delete-product/{productId}")
+                .then().log().all().extract().response().asString();
+
+        System.out.println(deleteResponse);
     }
 }
