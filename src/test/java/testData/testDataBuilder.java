@@ -3,37 +3,41 @@ package testData;
 import models.request.loginUser;
 import models.request.logoutUser;
 import models.request.registerUser;
+import net.datafaker.Faker;
 
 public class testDataBuilder {
-        public registerUser registerUserPayload(
-                String username,
-                String email,
-                String password) {
 
-            registerUser user = new registerUser();
+    private final Faker faker = new Faker();
+    public static String username;
+    public static String email;
+    public static String password;
 
-            user.setUsername(username);
-            user.setEmail(email);
-            user.setPassword(password);
+    public registerUser registerUserPayload() {
 
-            return user;
-        }
+        username = "tester_" + faker.number().digits(6);
+        email = username + "@gmail.com";
+        password = "Qa@" + faker.number().digits(8);
 
-        public loginUser loginUserPayload(String identifier, String password){
-            loginUser user = new loginUser();
+        registerUser user = new registerUser();
 
-            user.setIdentifier(identifier);
-            user.setPassword(password);
+        user.setUsername(username);
+        user.setEmail(email);
+        user.setPassword(password);
 
-            return user;
+        return user;
+    }
+
+    public loginUser loginUserPayload() {
+
+        loginUser user = new loginUser();
+        user.setIdentifier(username);
+        user.setPassword(password);
+        return user;
     }
 
     public logoutUser logoutUserPayload(String userId) {
-
         logoutUser payload = new logoutUser();
-
         payload.setUserid(userId);
-
         return payload;
     }
 }

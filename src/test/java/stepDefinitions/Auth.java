@@ -18,29 +18,22 @@ public class Auth {
     testDataBuilder testData = new testDataBuilder();
     Response response;
     private static String userId;
-    @Given("Register Payload with {string} {string} {string}")
-    public void register_payload_with(String username, String email, String password) {
+    @Given("Register Payload")
+    public void register_payload() {
+
         res = given()
                 .spec(SpecBuilder.getRequestSpec())
                 .log().all()
-                .body(testData.registerUserPayload(
-                        username,
-                        email,
-                        password
-                ));
+                .body(testData.registerUserPayload());
     }
 
-    @Given("Login Payload with {string} {string}")
-    public void login_payload_with(String identifier, String password) {
+    @Given("Login Payload")
+    public void login_payload() {
+
         res = given()
                 .spec(SpecBuilder.getRequestSpec())
                 .log().all()
-                .body(testData.loginUserPayload(
-                        identifier,
-                        password
-                        )
-                );
-
+                .body(testData.loginUserPayload());
     }
 
     @Given("Logout Payload")
