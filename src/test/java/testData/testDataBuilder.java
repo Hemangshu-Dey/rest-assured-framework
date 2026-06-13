@@ -1,6 +1,7 @@
 package testData;
 
 import models.request.loginUser;
+import models.request.logoutUser;
 import models.request.registerUser;
 
 public class testDataBuilder {
@@ -25,5 +26,14 @@ public class testDataBuilder {
             user.setPassword(password);
 
             return user;
+    }
+
+    public logoutUser logoutUserPayload(String userId) {
+
+        logoutUser payload = new logoutUser();
+
+        payload.setUserid(userId);
+
+        return payload;
     }
 }

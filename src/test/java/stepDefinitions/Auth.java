@@ -6,7 +6,6 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-import io.restassured.specification.ResponseSpecification;
 import testData.testDataBuilder;
 import utils.SpecBuilder;
 
@@ -18,6 +17,7 @@ public class Auth {
     RequestSpecification res;
     testDataBuilder testData = new testDataBuilder();
     Response response;
+    private static String userId;
     @Given("Register Payload with {string} {string} {string}")
     public void register_payload_with(String username, String email, String password) {
         res = given()
@@ -35,13 +35,21 @@ public class Auth {
         res = given()
                 .spec(SpecBuilder.getRequestSpec())
                 .log().all()
-                .body(
-                        testData.loginUserPayload(
-                                identifier,
-                                password
+                .body(testData.loginUserPayload(
+                        identifier,
+                        password
                         )
                 );
 
+    }
+
+    @Given("Logout Payload")
+    public void logout_payload() {
+
+        res = given()
+                .spec(SpecBuilder.getRequestSpec())
+                .log().all()
+                .body(testData.logoutUserPayload(userId));
     }
 
     @When("User Calls {string} with {string} http request")
@@ -63,5 +71,13 @@ public class Auth {
     public void in_response_body_is(String key, String expectedValue) {
         String actualValue = response.jsonPath().getString(key);
         assertEquals(expectedValue, actualValue);
+    }
+
+    @Then("Store {string} from response as {string}")
+    public void store_from_response_as(String jsonPath, String variable) {
+
+        if (variable.equals("userId")) {
+            userId = response.jsonPath().getString(jsonPath);
+        }
     }
 }
