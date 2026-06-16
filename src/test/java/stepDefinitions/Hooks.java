@@ -1,6 +1,6 @@
 package stepDefinitions;
 
-import enums.AuthResources;
+import enums.ApiResources;
 import io.cucumber.java.Before;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
@@ -30,7 +30,7 @@ public class Hooks {
 
         Response registerResponse = registerRequest
                 .when()
-                .post(AuthResources.registerUserApi.getResource());
+                .post(ApiResources.registerUserApi.getResource());
 
         assertEquals(200, registerResponse.getStatusCode());
 
@@ -41,7 +41,7 @@ public class Hooks {
 
         Response loginResponse = loginRequest
                 .when()
-                .post(AuthResources.loginUserApi.getResource());
+                .post(ApiResources.loginUserApi.getResource());
 
         assertEquals(200, loginResponse.getStatusCode());
 
@@ -54,5 +54,22 @@ public class Hooks {
                         .jsonPath()
                         .getString("data.id")
         );
+    }
+
+    @Before("@CategoryExists")
+    public void createCategory() {
+
+        Response response =
+                given()
+                        .spec(SpecBuilder.getRequestSpec())
+                        .cookies(testContext.getCookies())
+                        .body(testData.createTodoCategoryPayload())
+                        .when()
+                        .post(ApiResources.createTodoCategoryApi.getResource());
+
+        testContext.setCategoryId(
+                response.jsonPath().getString("data.id")
+        );
+
     }
 }

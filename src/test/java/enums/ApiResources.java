@@ -1,15 +1,18 @@
 package enums;
 
-public enum AuthResources {
+public enum ApiResources {
     registerUserApi("/api/auth/register"),
     loginUserApi("/api/auth/login"),
     logoutUserApi("/api/auth/logout"),
     validateAccessTokenApi("/api/auth/validation"),
-    refreshAccessTokenApi("/api/token/newToken");
+    refreshAccessTokenApi("/api/token/newToken"),
+    getTodoCategoryApi("/api/todo/getToDoCategory"),
+    createTodoCategoryApi("/api/todo/createToDoCategory"),
+    deleteTodoCategoryApi("/api/todo/deleteToDoCategory");
 
     private final String resource;
 
-    AuthResources(String resource) {
+    ApiResources(String resource) {
         this.resource = resource;
     }
 

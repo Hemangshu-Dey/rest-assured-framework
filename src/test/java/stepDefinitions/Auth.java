@@ -79,6 +79,16 @@ public class Auth {
                             .jsonPath()
                             .getString(jsonPath)
             );
+
+        }
+        else if(variable.equalsIgnoreCase("categoryId")){
+
+            testContext.setCategoryId(
+                    testContext.getResponse()
+                            .jsonPath()
+                            .getString(jsonPath)
+            );
+
         }
     }
 }

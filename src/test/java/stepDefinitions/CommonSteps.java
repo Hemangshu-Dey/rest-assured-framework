@@ -1,6 +1,6 @@
 package stepDefinitions;
 
-import enums.AuthResources;
+import enums.ApiResources;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.response.Response;
@@ -22,7 +22,7 @@ public class CommonSteps {
 
         RequestSpecification res = testContext.getRequestSpecification();
 
-        AuthResources apiResource = AuthResources.valueOf(resource);
+        ApiResources apiResource = ApiResources.valueOf(resource);
 
         Response response;
 

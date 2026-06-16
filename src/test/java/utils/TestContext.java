@@ -10,6 +10,7 @@ public class TestContext {
     private Response response;
     private Cookies cookies;
     private String userId;
+    private String categoryId;
 
     public RequestSpecification getRequestSpecification() {
         return requestSpecification;
@@ -41,5 +42,13 @@ public class TestContext {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
     }
 }

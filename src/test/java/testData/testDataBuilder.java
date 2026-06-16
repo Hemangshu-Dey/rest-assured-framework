@@ -1,5 +1,6 @@
 package testData;
 
+import models.request.createTodoCategory;
 import models.request.loginUser;
 import models.request.logoutUser;
 import models.request.registerUser;
@@ -38,6 +39,15 @@ public class testDataBuilder {
     public logoutUser logoutUserPayload(String userId) {
         logoutUser payload = new logoutUser();
         payload.setUserid(userId);
+        return payload;
+    }
+
+    public createTodoCategory createTodoCategoryPayload() {
+
+        createTodoCategory payload = new createTodoCategory();
+
+        payload.setCategoryName(faker.book().genre());
+
         return payload;
     }
 }
