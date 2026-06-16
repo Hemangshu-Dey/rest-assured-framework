@@ -4,13 +4,16 @@ import io.restassured.http.Cookies;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class TestContext {
 
     private RequestSpecification requestSpecification;
     private Response response;
     private Cookies cookies;
-    private String userId;
-    private String categoryId;
+
+    private final Map<String, String> storedValues = new HashMap<>();
 
     public RequestSpecification getRequestSpecification() {
         return requestSpecification;
@@ -36,19 +39,11 @@ public class TestContext {
         this.cookies = cookies;
     }
 
-    public String getUserId() {
-        return userId;
+    public void put(String key, String value) {
+        storedValues.put(key, value);
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public String getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(String categoryId) {
-        this.categoryId = categoryId;
+    public String get(String key) {
+        return storedValues.get(key);
     }
 }

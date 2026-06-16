@@ -51,7 +51,7 @@ public class Todo {
                 given()
                         .spec(SpecBuilder.getRequestSpec())
                         .cookies(testContext.getCookies())
-                        .queryParam("id", testContext.getCategoryId())
+                        .queryParam("id", testContext.get("categoryId"))
                         .log().all()
 
         );

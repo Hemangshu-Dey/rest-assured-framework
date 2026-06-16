@@ -64,4 +64,14 @@ public class CommonSteps {
                         .getString(key)
         );
     }
+
+    @Then("Store {string} from response as {string}")
+    public void store_from_response_as(String jsonPath, String variable) {
+
+        String value = testContext.getResponse()
+                .jsonPath()
+                .getString(jsonPath);
+
+        testContext.put(variable, value);
+    }
 }

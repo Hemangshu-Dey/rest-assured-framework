@@ -54,7 +54,7 @@ public class Auth {
                         .log().all()
                         .body(
                                 testData.logoutUserPayload(
-                                        testContext.getUserId()
+                                        testContext.get("userId")
                                 )
                         )
 
@@ -67,28 +67,5 @@ public class Auth {
         testContext.setCookies(
                 testContext.getResponse().getDetailedCookies()
         );
-    }
-
-    @Then("Store {string} from response as {string}")
-    public void store_from_response_as(String jsonPath, String variable) {
-
-        if(variable.equalsIgnoreCase("userId")){
-
-            testContext.setUserId(
-                    testContext.getResponse()
-                            .jsonPath()
-                            .getString(jsonPath)
-            );
-
-        }
-        else if(variable.equalsIgnoreCase("categoryId")){
-
-            testContext.setCategoryId(
-                    testContext.getResponse()
-                            .jsonPath()
-                            .getString(jsonPath)
-            );
-
-        }
     }
 }

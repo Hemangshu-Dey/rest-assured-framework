@@ -49,7 +49,8 @@ public class Hooks {
                 loginResponse.getDetailedCookies()
         );
 
-        testContext.setUserId(
+        testContext.put(
+                "userId",
                 loginResponse
                         .jsonPath()
                         .getString("data.id")
@@ -67,8 +68,11 @@ public class Hooks {
                         .when()
                         .post(ApiResources.createTodoCategoryApi.getResource());
 
-        testContext.setCategoryId(
-                response.jsonPath().getString("data.id")
+        testContext.put(
+                "categoryId",
+                response
+                        .jsonPath()
+                        .getString("data.id")
         );
 
     }
