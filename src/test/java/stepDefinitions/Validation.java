@@ -1,6 +1,7 @@
 package stepDefinitions;
 
 import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
 import utils.SpecBuilder;
 import utils.TestContext;
 
@@ -24,6 +25,13 @@ public class Validation {
                         .cookies(testContext.getCookies())
                         .log().all()
 
+        );
+    }
+
+    @Then("Update authentication cookies")
+    public void update_authentication_cookies() {
+        testContext.setCookies(
+                testContext.getResponse().getDetailedCookies()
         );
     }
 }

@@ -4,7 +4,8 @@ public enum AuthResources {
     registerUserApi("/api/auth/register"),
     loginUserApi("/api/auth/login"),
     logoutUserApi("/api/auth/logout"),
-    validateAccessTokenApi("/api/auth/validation");;
+    validateAccessTokenApi("/api/auth/validation"),
+    refreshAccessTokenApi("/api/token/newToken");
 
     private final String resource;
 
