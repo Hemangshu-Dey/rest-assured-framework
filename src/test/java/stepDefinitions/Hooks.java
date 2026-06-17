@@ -20,28 +20,32 @@ public class Hooks {
         this.testContext = testContext;
     }
 
-    @Before("@Authenticated")
+    @Before(value = "@Authenticated", order = 1)
     public void authenticateUser() {
 
-        RequestSpecification registerRequest = given()
-                .spec(SpecBuilder.getRequestSpec())
-                .log().all()
-                .body(testData.registerUserPayload());
+        // Register User
+        RequestSpecification registerRequest =
+                given()
+                        .spec(SpecBuilder.getRequestSpec())
+                        .body(testData.registerUserPayload());
 
-        Response registerResponse = registerRequest
-                .when()
-                .post(ApiResources.registerUserApi.getResource());
+        Response registerResponse =
+                registerRequest
+                        .when()
+                        .post(ApiResources.registerUserApi.getResource());
 
         assertEquals(200, registerResponse.getStatusCode());
 
-        RequestSpecification loginRequest = given()
-                .spec(SpecBuilder.getRequestSpec())
-                .log().all()
-                .body(testData.loginUserPayload());
+        // Login User
+        RequestSpecification loginRequest =
+                given()
+                        .spec(SpecBuilder.getRequestSpec())
+                        .body(testData.loginUserPayload());
 
-        Response loginResponse = loginRequest
-                .when()
-                .post(ApiResources.loginUserApi.getResource());
+        Response loginResponse =
+                loginRequest
+                        .when()
+                        .post(ApiResources.loginUserApi.getResource());
 
         assertEquals(200, loginResponse.getStatusCode());
 
@@ -51,29 +55,55 @@ public class Hooks {
 
         testContext.put(
                 "userId",
-                loginResponse
-                        .jsonPath()
-                        .getString("data.id")
+                loginResponse.jsonPath().getString("data.id")
         );
     }
 
-    @Before("@CategoryExists")
+    @Before(value = "@CategoryExists", order = 2)
     public void createCategory() {
 
-        Response response =
+        RequestSpecification request =
                 given()
                         .spec(SpecBuilder.getRequestSpec())
                         .cookies(testContext.getCookies())
-                        .body(testData.createTodoCategoryPayload())
+                        .body(testData.createTodoCategoryPayload());
+
+        Response response =
+                request
                         .when()
                         .post(ApiResources.createTodoCategoryApi.getResource());
 
+        assertEquals(200, response.getStatusCode());
+
         testContext.put(
                 "categoryId",
-                response
-                        .jsonPath()
-                        .getString("data.id")
+                response.jsonPath().getString("data.id")
         );
+    }
 
+    @Before(value = "@TodoExists", order = 3)
+    public void createTodo() {
+
+        RequestSpecification request =
+                given()
+                        .spec(SpecBuilder.getRequestSpec())
+                        .cookies(testContext.getCookies())
+                        .body(
+                                testData.createTodoPayload(
+                                        testContext.get("categoryId")
+                                )
+                        ).log().all();;
+
+        Response response =
+                request
+                        .when()
+                        .post(ApiResources.createTodoApi.getResource());
+
+        assertEquals(200, response.getStatusCode());
+
+        testContext.put(
+                "todoId",
+                response.jsonPath().getString("data.id")
+        );
     }
 }

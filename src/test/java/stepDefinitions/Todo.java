@@ -51,10 +51,81 @@ public class Todo {
                 given()
                         .spec(SpecBuilder.getRequestSpec())
                         .cookies(testContext.getCookies())
-                        .queryParam("id", testContext.get("categoryId"))
+                        .queryParam(
+                                "id",
+                                testContext.get("categoryId")
+                        )
                         .log().all()
 
         );
     }
 
+    @Given("Get Todo Payload")
+    public void get_todo_payload() {
+
+        testContext.setRequestSpecification(
+
+                given()
+                        .spec(SpecBuilder.getRequestSpec())
+                        .cookies(testContext.getCookies())
+                        .queryParam(
+                                "categoryId",
+                                testContext.get("categoryId")
+                        )
+                        .log().all()
+
+        );
+    }
+
+    @Given("Create Todo Payload")
+    public void create_todo_payload() {
+
+        testContext.setRequestSpecification(
+
+                given()
+                        .spec(SpecBuilder.getRequestSpec())
+                        .cookies(testContext.getCookies())
+                        .body(
+                                testData.createTodoPayload(
+                                        testContext.get("categoryId")
+                                )
+                        )
+                        .log().all()
+
+        );
+    }
+
+    @Given("Toggle Todo Payload")
+    public void toggle_todo_payload() {
+
+        testContext.setRequestSpecification(
+
+                given()
+                        .spec(SpecBuilder.getRequestSpec())
+                        .cookies(testContext.getCookies())
+                        .body(
+                                testData.toggleTodoPayload(
+                                        testContext.get("todoId")
+                                )
+                        )
+                        .log().all()
+
+        );
+    }
+
+    @Given("Delete Todo Payload")
+    public void delete_todo_payload() {
+
+        testContext.setRequestSpecification(
+
+                given()
+                        .spec(SpecBuilder.getRequestSpec())
+                        .cookies(testContext.getCookies())
+                        .queryParam(
+                                "id",
+                                testContext.get("todoId")
+                        )
+                        .log().all()
+        );
+    }
 }

@@ -1,10 +1,9 @@
 package testData;
 
-import models.request.createTodoCategory;
-import models.request.loginUser;
-import models.request.logoutUser;
-import models.request.registerUser;
+import models.request.*;
 import net.datafaker.Faker;
+
+import java.time.LocalDate;
 
 public class testDataBuilder {
 
@@ -47,6 +46,33 @@ public class testDataBuilder {
         createTodoCategory payload = new createTodoCategory();
 
         payload.setCategoryName(faker.book().genre());
+
+        return payload;
+    }
+
+    public createTodo createTodoPayload(String categoryId){
+        createTodo todo = new createTodo();
+
+        todo.setTitle(faker.book().title());
+
+        todo.setDescription(faker.lorem().sentence());
+
+        todo.setDeadline(
+                LocalDate.now()
+                        .plusDays(5)
+                        .toString()
+        );
+
+        todo.setTodoCategoryId(categoryId);
+
+        return todo;
+    }
+
+    public toggleTodo toggleTodoPayload(String todoId) {
+
+        toggleTodo payload = new toggleTodo();
+
+        payload.setTodoId(todoId);
 
         return payload;
     }

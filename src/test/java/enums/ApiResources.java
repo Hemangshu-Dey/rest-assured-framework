@@ -8,7 +8,11 @@ public enum ApiResources {
     refreshAccessTokenApi("/api/token/newToken"),
     getTodoCategoryApi("/api/todo/getToDoCategory"),
     createTodoCategoryApi("/api/todo/createToDoCategory"),
-    deleteTodoCategoryApi("/api/todo/deleteToDoCategory");
+    deleteTodoCategoryApi("/api/todo/deleteToDoCategory"),
+    getTodoApi("/api/todo/getToDo"),
+    createTodoApi("/api/todo/createToDo"),
+    toggleTodoApi("/api/todo/toggleToDo"),
+    deleteTodoApi("/api/todo/deleteToDo");
 
     private final String resource;
 

@@ -38,6 +38,9 @@ public class CommonSteps {
         else if (method.equalsIgnoreCase("DELETE")) {
             response = res.when().delete(apiResource.getResource());
         }
+        else if (method.equalsIgnoreCase("PATCH")) {
+            response = res.when().patch(apiResource.getResource());
+        }
         else {
             throw new IllegalArgumentException("Unsupported HTTP Method");
         }
